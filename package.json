@@ -1,0 +1,40 @@
+{
+  "name": "gatling_w_ts",
+  "type": "module",
+  "main": "target/bundle",
+  "version": "1.0.0",
+  "description": "Gatling tests with typescript",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/testerops01/gatling_w_ts.git"
+  },
+  "keywords": [
+    "gatling",
+    "typescript",
+    "load",
+    "testing",
+    "performance",
+    "testing"
+  ],
+  "author": "Rahul",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/testerops01/gatling_w_ts/issues"
+  },
+  "homepage": "https://github.com/testerops01/gatling_w_ts#readme",
+  "dependencies": {
+    "@gatling.io/cli": "^3.11.4",
+    "@gatling.io/core": "^3.11.4",
+    "@gatling.io/http": "^3.11.4",
+    "prettier": "^3.3.2",
+    "rimraf": "^5.0.7",
+    "typescript": "^5.5.3"
+  },
+  "scripts": {
+    "clean": "rimraf target",
+    "format": "prettier --write \"**/*.js\"",
+    "build": "gatling build",
+    "recorder": "gatling recorder",
+    "computerdatabase": "gatling run --simulation computerdatabase"
+  }
+}
