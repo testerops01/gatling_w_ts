@@ -35,6 +35,6 @@
     "format": "prettier --write \"**/*.js\"",
     "build": "gatling build",
     "recorder": "gatling recorder",
-    "computerdatabase": "gatling run --simulation computerdatabase"
+    "computerdatabase": "tsc --noEmit && gatling run --typescript --simulation searchComputerDatabase"
   }
 }

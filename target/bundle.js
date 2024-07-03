@@ -701,7 +701,7 @@ var gatling = (() => {
         }
       };
       exports.xpath = xpath;
-      var css = (selector, nodeAttribute) => {
+      var css2 = (selector, nodeAttribute) => {
         if (typeof selector === "function") {
           if (nodeAttribute !== void 0) {
             return (0, multipleFind_1.wrapCheckBuilderMultipleFind)(jvm_types_1.CoreDsl.css((0, session_1.underlyingSessionTo)(selector), nodeAttribute));
@@ -716,7 +716,7 @@ var gatling = (() => {
           }
         }
       };
-      exports.css = css;
+      exports.css = css2;
       var form = (selector) => (0, multipleFind_1.wrapCheckBuilderMultipleFind)(
         typeof selector === "function" ? jvm_types_1.CoreDsl.form((0, session_1.underlyingSessionTo)(selector)) : jvm_types_1.CoreDsl.form(selector)
         // TODO change type of java.util.Map in java2typescript
@@ -834,8 +834,8 @@ var gatling = (() => {
         eager: () => wrapBatchableFeederBuilder(_underlying.eager()),
         batch: (lines) => wrapBatchableFeederBuilder(lines !== void 0 ? _underlying.batch(lines) : _underlying.batch())
       });
-      var csv = (filePath, quoteChar) => wrapBatchableFeederBuilder(quoteChar !== void 0 ? jvm_types_1.CoreDsl.csv(filePath, quoteChar) : jvm_types_1.CoreDsl.csv(filePath));
-      exports.csv = csv;
+      var csv2 = (filePath, quoteChar) => wrapBatchableFeederBuilder(quoteChar !== void 0 ? jvm_types_1.CoreDsl.csv(filePath, quoteChar) : jvm_types_1.CoreDsl.csv(filePath));
+      exports.csv = csv2;
       var ssv = (filePath, quoteChar) => wrapBatchableFeederBuilder(quoteChar !== void 0 ? jvm_types_1.CoreDsl.ssv(filePath, quoteChar) : jvm_types_1.CoreDsl.ssv(filePath));
       exports.ssv = ssv;
       var tsv = (filePath, quoteChar) => wrapBatchableFeederBuilder(quoteChar !== void 0 ? jvm_types_1.CoreDsl.tsv(filePath, quoteChar) : jvm_types_1.CoreDsl.tsv(filePath));
@@ -945,8 +945,8 @@ var gatling = (() => {
         startingFrom: (startingRate) => wrapOpenInjectionStepStairsComposite(_underlying.startingFrom(startingRate)),
         separatedByRampsLasting: (duration) => wrapOpenInjectionStepStairsComposite(_underlying.separatedByRampsLasting((0, duration_1.toJvmDuration)(duration)))
       });
-      var rampUsers2 = (users) => wrapOpenInjectionStepRamp(jvm_types_1.CoreDsl.rampUsers(users));
-      exports.rampUsers = rampUsers2;
+      var rampUsers3 = (users) => wrapOpenInjectionStepRamp(jvm_types_1.CoreDsl.rampUsers(users));
+      exports.rampUsers = rampUsers3;
       var stressPeakUsers = (users) => wrapOpenInjectionStepStressPeak(jvm_types_1.CoreDsl.stressPeakUsers(users));
       exports.stressPeakUsers = stressPeakUsers;
       var atOnceUsers = (users) => wrapOpenInjectionStep(jvm_types_1.CoreDsl.atOnceUsers(users));
@@ -1817,11 +1817,11 @@ var gatling = (() => {
         injectClosed: (...steps) => (0, population_1.wrapPopulationBuilder)(jvmScenarioBuilder.injectClosed(steps.map((s) => s._underlying))),
         ...(0, structure_1.structureBuilderImpl)(jvmScenarioBuilder, wrapScenarioBuilder)
       });
-      var scenario3 = (name) => {
+      var scenario4 = (name) => {
         const jvmScenarioBuilder = jvm_types_1.CoreDsl.scenario(name);
         return wrapScenarioBuilder(jvmScenarioBuilder);
       };
-      exports.scenario = scenario3;
+      exports.scenario = scenario4;
     }
   });
 
@@ -1908,10 +1908,10 @@ var gatling = (() => {
         normalPausesWithPercentageDuration: (stdDevPercent) => wrapSetUp(jvmSetUp.normalPausesWithPercentageDuration(stdDevPercent)),
         pauses: (pauseType) => wrapSetUp(jvmSetUp.pauses((0, pauses_1.toJvmPauseType)(pauseType)))
       });
-      var simulation3 = (simulation4) => (jvmSetUp) => {
-        simulation4((...populationBuilders) => wrapSetUp(jvmSetUp(populationBuilders.map((p) => p._underlying))));
+      var simulation4 = (simulation5) => (jvmSetUp) => {
+        simulation5((...populationBuilders) => wrapSetUp(jvmSetUp(populationBuilders.map((p) => p._underlying))));
       };
-      exports.simulation = simulation3;
+      exports.simulation = simulation4;
     }
   });
 
@@ -2560,8 +2560,8 @@ var gatling = (() => {
         jvm_types_1.HttpDsl.headerRegex(name, pattern)
       ));
       exports.headerRegex = headerRegex;
-      var status = () => (0, core_1.wrapCheckBuilderFind)(jvm_types_1.HttpDsl.status());
-      exports.status = status;
+      var status2 = () => (0, core_1.wrapCheckBuilderFind)(jvm_types_1.HttpDsl.status());
+      exports.status = status2;
     }
   });
 
@@ -2735,7 +2735,8 @@ var gatling = (() => {
   var stdin_exports = {};
   __export(stdin_exports, {
     first_test: () => first_test_gatling_default,
-    multiple_scenarios: () => multiple_scenarios_gatling_default
+    multiple_scenarios: () => multiple_scenarios_gatling_default,
+    searchComputerDatabase: () => searchComputerDatabase_gatling_default
   });
 
   // src/first_test.gatling.ts
@@ -2759,6 +2760,28 @@ var gatling = (() => {
     setUp(
       myFirstScenario.injectOpen((0, import_core2.constantUsersPerSec)(2).during(60)),
       mySecondScenario.injectOpen((0, import_core2.rampUsers)(10).during(5))
+    ).protocols(httpProtocol);
+  });
+
+  // src/searchComputerDatabase.gatling.ts
+  var import_core3 = __toESM(require_target(), 1);
+  var import_http3 = __toESM(require_target2(), 1);
+  var searchComputerDatabase_gatling_default = (0, import_core3.simulation)((setUp) => {
+    const dataFeeder = (0, import_core3.csv)("search.csv").random();
+    const searchMethod = (0, import_core3.exec)(
+      (0, import_http3.http)(`HomePage`).get(`/`),
+      (0, import_core3.pause)(1),
+      (0, import_core3.feed)(dataFeeder),
+      (0, import_http3.http)(`Search`).get(`/computers?f=#{searchCriterion}`).check((0, import_core3.css)("a:contains('#{searchComputerName}')", "href").saveAs("computerURL")),
+      (0, import_core3.pause)(1),
+      (0, import_http3.http)(`SelectProduct`).get("#{computerURL}").check((0, import_http3.status)().is(200)),
+      (0, import_core3.pause)(1)
+    );
+    const checkItem = (0, import_core3.repeat)(4, "i").on((0, import_http3.http)(`Page #{i}`).get(`/computers?p=#{i}`), (0, import_core3.pause)(1));
+    const httpProtocol = import_http3.http.baseUrl(`https://computer-database.gatling.io`).acceptHeader(`ext/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8`).acceptLanguageHeader(`en-US,en;q=0.5`).acceptEncodingHeader(`gzip, deflate`).userAgentHeader(`Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36`);
+    const normalUser = (0, import_core3.scenario)(`NormalUserSearch`).exec(searchMethod, checkItem);
+    setUp(
+      normalUser.injectOpen((0, import_core3.rampUsers)(15).during(10))
     ).protocols(httpProtocol);
   });
   return __toCommonJS(stdin_exports);
